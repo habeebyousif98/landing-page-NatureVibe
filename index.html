@@ -15,16 +15,16 @@
     }
 
     :root {
-      --primary-teal: #0a9396;
-      --light-teal: #94d2bd;
-      --accent-coral: #ee9b00;
-      --dark-teal: #005f73;
+      --primary-blue: #4a90e2;
+      --light-blue: #87ceeb;
+      --accent-orange: #ff7e5f;
+      --dark-blue: #2c5aa0;
       --light-bg: #f9f9f9;
       --white: #ffffff;
       --text-dark: #333333;
       --text-light: #666666;
-      --gradient-primary: linear-gradient(135deg, #0a9396, #005f73);
-      --gradient-secondary: linear-gradient(135deg, #ee9b00, #ca6702);
+      --gradient-primary: linear-gradient(135deg, #4a90e2, #87ceeb);
+      --gradient-secondary: linear-gradient(135deg, #ff7e5f, #feb47b);
     }
 
     body {
@@ -74,21 +74,21 @@
 
     .lang-btn.active {
       background: var(--white);
-      color: var(--primary-teal);
+      color: var(--primary-blue);
     }
 
     .logo {
       font-size: 32px;
       font-weight: 700;
       margin-bottom: 10px;
-      color: #e9f5f5;
+      color: #e9f5ff;
       text-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
 
     .tagline {
       font-size: 18px;
       margin-bottom: 30px;
-      color: #d0ecec;
+      color: #d0e8ff;
       font-weight: 500;
     }
 
@@ -97,7 +97,7 @@
       justify-content: center;
       margin-bottom: 30px;
       font-size: 14px;
-      color: #e9f5f5;
+      color: #e9f5ff;
     }
 
     .stat-item {
@@ -123,7 +123,7 @@
     .description {
       margin-bottom: 30px;
       line-height: 1.6;
-      color: #d0ecec;
+      color: #d0e8ff;
     }
 
     .benefits {
@@ -162,7 +162,7 @@
       width: 100%;
       font-family: 'Montserrat', 'Cairo', sans-serif;
       background: rgba(255, 255, 255, 0.9);
-      color: var(--dark-teal);
+      color: var(--dark-blue);
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       transition: all 0.3s;
     }
@@ -206,7 +206,7 @@
     }
 
     .new-badge {
-      background: var(--accent-coral);
+      background: var(--accent-orange);
       color: white;
       padding: 6px 12px;
       border-radius: 20px;
@@ -219,7 +219,7 @@
     .footer {
       margin-top: 20px;
       font-size: 14px;
-      color: #d0ecec;
+      color: #d0e8ff;
     }
 
     .product-image {
@@ -285,29 +285,21 @@
     <div class="logo" data-en="NatureVibe" data-ar="NatureVibe">NatureVibe</div>
     <div class="tagline" data-en="Natural drinks to boost energy, immunity and vitality" data-ar="مشروبات طبيعية لتعزيز الطاقة والمناعة والحوية">Natural drinks to boost energy, immunity and vitality</div>
     
-    <div class="product-image">🥤</div>
-    
-    <div class="stats">
-      <div class="stat-item">
-        <span class="stat-number">8</span>
-        <span data-en="Products" data-ar="منتجات">Products</span>
-      </div>
-    </div>
 
     <h1>
       <span data-en="Select Your Country" data-ar="اختر بلدك">Select Your Country</span>
-      <span class="new-badge" data-en="New" data-ar="جديد">New</span>
     </h1>
     <p class="description" data-en="Choose your location to get NatureVibe natural drinks suitable for your region" data-ar="اختر موقعك للحصول على مشروبات NatureVibe الطبيعية المناسبة لمنطقتك">Choose your location to get NatureVibe natural drinks suitable for your region</p>
     
     <select id="countrySelector">
       <option value="">-- <span data-en="Choose Country" data-ar="اختر البلد">Choose Country</span> --</option>
+      <!-- Countries sorted alphabetically in English -->
+      <option value="https://naturevibe.com/bahrain" data-en="Bahrain" data-ar="البحرين">Bahrain</option>
+      <option value="https://naturevibe.com/kuwait" data-en="Kuwait" data-ar="الكويت">Kuwait</option>
+      <option value="https://naturevibe.com/oman" data-en="Oman" data-ar="عُمان">Oman</option>
+      <option value="https://naturevibe.com/qatar" data-en="Qatar" data-ar="قطر">Qatar</option>
       <option value="https://naturevibe.com/saudi" data-en="Saudi Arabia" data-ar="المملكة العربية السعودية">Saudi Arabia</option>
       <option value="https://naturevibe.com/uae" data-en="United Arab Emirates" data-ar="الإمارات العربية المتحدة">United Arab Emirates</option>
-      <option value="https://naturevibe.com/kuwait" data-en="Kuwait" data-ar="الكويت">Kuwait</option>
-      <option value="https://naturevibe.com/qatar" data-en="Qatar" data-ar="قطر">Qatar</option>
-      <option value="https://naturevibe.com/bahrain" data-en="Bahrain" data-ar="البحرين">Bahrain</option>
-      <option value="https://naturevibe.com/oman" data-en="Oman" data-ar="عُمان">Oman</option>
     </select>
 
     <div class="benefits">
@@ -359,31 +351,48 @@
         body.classList.add('rtl');
         englishBtn.classList.remove('active');
         arabicBtn.classList.add('active');
+        
+        // Sort options alphabetically in Arabic
+        const options = Array.from(selector.querySelectorAll('option'));
+        options.sort((a, b) => {
+          if (a.value === "" || b.value === "") return 0;
+          return a.getAttribute('data-ar').localeCompare(b.getAttribute('data-ar'), 'ar');
+        });
+        
+        // Clear and re-add sorted options
+        selector.innerHTML = '';
+        options.forEach(option => selector.appendChild(option));
+        
+        // Update text content for Arabic
+        document.querySelectorAll('[data-en], [data-ar]').forEach(element => {
+          if (element.hasAttribute('data-ar')) {
+            element.textContent = element.getAttribute('data-ar');
+          }
+        });
       } else {
         body.classList.remove('rtl');
         body.classList.add('ltr');
         arabicBtn.classList.remove('active');
         englishBtn.classList.add('active');
+        
+        // Sort options alphabetically in English
+        const options = Array.from(selector.querySelectorAll('option'));
+        options.sort((a, b) => {
+          if (a.value === "" || b.value === "") return 0;
+          return a.getAttribute('data-en').localeCompare(b.getAttribute('data-en'));
+        });
+        
+        // Clear and re-add sorted options
+        selector.innerHTML = '';
+        options.forEach(option => selector.appendChild(option));
+        
+        // Update text content for English
+        document.querySelectorAll('[data-en], [data-ar]').forEach(element => {
+          if (element.hasAttribute('data-en')) {
+            element.textContent = element.getAttribute('data-en');
+          }
+        });
       }
-      
-      // Update all text elements
-      document.querySelectorAll('[data-en], [data-ar]').forEach(element => {
-        if (lang === 'ar' && element.hasAttribute('data-ar')) {
-          element.textContent = element.getAttribute('data-ar');
-        } else if (lang === 'en' && element.hasAttribute('data-en')) {
-          element.textContent = element.getAttribute('data-en');
-        }
-      });
-      
-      // Update select options
-      const options = selector.querySelectorAll('option');
-      options.forEach(option => {
-        if (option.value && lang === 'ar' && option.hasAttribute('data-ar')) {
-          option.textContent = option.getAttribute('data-ar');
-        } else if (option.value && lang === 'en' && option.hasAttribute('data-en')) {
-          option.textContent = option.getAttribute('data-en');
-        }
-      });
     }
 
     // Event listeners for language buttons
