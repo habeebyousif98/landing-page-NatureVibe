@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Country Selector Landing Page</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      max-width: 400px;
+      width: 90%;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    select {
+      padding: 10px 15px;
+      border-radius: 10px;
+      border: none;
+      font-size: 16px;
+      margin-bottom: 20px;
+      width: 100%;
+    }
+    .link-container {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .link-container a {
+      text-decoration: none;
+      background: #fff;
+      color: #2575fc;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .link-container a:hover {
+      background: #f0f0f0;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Select Your Country</h1>
+    <select id="countrySelector">
+      <option value="">-- Choose Country --</option>
+      <option value="https://example.com/usa">USA</option>
+      <option value="https://example.com/canada">Canada</option>
+      <option value="https://example.com/uk">UK</option>
+      <option value="https://example.com/germany">Germany</option>
+      <option value="https://example.com/france">France</option>
+    </select>
+
+    <div class="link-container" id="linkContainer">
+      <p>Your special URL:</p>
+      <a id="forwardButton" href="#" target="_blank">Go to Link</a>
+    </div>
+  </div>
+
+  <script>
+    const selector = document.getElementById('countrySelector');
+    const linkContainer = document.getElementById('linkContainer');
+    const forwardButton = document.getElementById('forwardButton');
+
+    selector.addEventListener('change', () => {
+      const selectedURL = selector.value;
+      if(selectedURL){
+        forwardButton.href = selectedURL;
+        linkContainer.style.display = 'flex';
+      } else {
+        linkContainer.style.display = 'none';
+      }
+    });
+  </script>
+
+</body>
+</html>
