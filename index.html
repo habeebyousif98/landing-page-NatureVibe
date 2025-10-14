@@ -3,84 +3,345 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Country Selector Landing Page</title>
+  <title>NatureVibe - Natural Energy & Immunity Drinks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #6a11cb, #2575fc);
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
+
+    :root {
+      --primary-teal: #0a9396;
+      --light-teal: #94d2bd;
+      --accent-coral: #ee9b00;
+      --dark-teal: #005f73;
+      --light-bg: #f9f9f9;
+      --white: #ffffff;
+      --text-dark: #333333;
+      --text-light: #666666;
+      --gradient-primary: linear-gradient(135deg, #0a9396, #005f73);
+      --gradient-secondary: linear-gradient(135deg, #ee9b00, #ca6702);
+    }
+
+    body {
+      font-family: 'Montserrat', 'Cairo', sans-serif;
+      background: var(--gradient-primary);
+      color: var(--white);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      text-align: center;
+    }
+
     .container {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.15);
       padding: 40px;
       border-radius: 20px;
-      text-align: center;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-      max-width: 400px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+      max-width: 500px;
       width: 90%;
+      margin-bottom: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
     }
+
+    .language-switcher {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .lang-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.3s;
+      font-weight: 500;
+    }
+
+    .lang-btn.active {
+      background: var(--white);
+      color: var(--primary-teal);
+    }
+
+    .logo {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #e9f5f5;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .tagline {
+      font-size: 18px;
+      margin-bottom: 30px;
+      color: #d0ecec;
+      font-weight: 500;
+    }
+
+    .stats {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+      font-size: 14px;
+      color: #e9f5f5;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 15px 20px;
+      border-radius: 12px;
+      margin: 0 10px;
+    }
+
+    .stat-number {
+      font-weight: 700;
+      font-size: 22px;
+    }
+
     h1 {
       margin-bottom: 20px;
+      font-size: 26px;
+      font-weight: 600;
     }
+
+    .description {
+      margin-bottom: 30px;
+      line-height: 1.6;
+      color: #d0ecec;
+    }
+
+    .benefits {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+
+    .benefit {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 18px 12px;
+      border-radius: 12px;
+      margin: 5px;
+      flex: 1;
+      min-width: 120px;
+      transition: transform 0.3s, background 0.3s;
+    }
+
+    .benefit:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .benefit-icon {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
     select {
-      padding: 10px 15px;
-      border-radius: 10px;
+      padding: 14px 18px;
+      border-radius: 12px;
       border: none;
       font-size: 16px;
       margin-bottom: 20px;
       width: 100%;
+      font-family: 'Montserrat', 'Cairo', sans-serif;
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--dark-teal);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: all 0.3s;
     }
+
+    select:focus {
+      outline: none;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+      background: white;
+    }
+
     .link-container {
       display: none;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
+      gap: 15px;
+      margin-top: 20px;
+      animation: fadeIn 0.5s ease-out;
     }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     .link-container a {
       text-decoration: none;
-      background: #fff;
-      color: #2575fc;
-      padding: 10px 20px;
-      border-radius: 10px;
-      font-weight: bold;
+      background: var(--gradient-secondary);
+      color: white;
+      padding: 14px 30px;
+      border-radius: 12px;
+      font-weight: 600;
       transition: 0.3s;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
+
     .link-container a:hover {
-      background: #f0f0f0;
       transform: scale(1.05);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+    }
+
+    .new-badge {
+      background: var(--accent-coral);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      margin-left: 10px;
+      vertical-align: middle;
+      font-weight: 600;
+    }
+
+    .footer {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #d0ecec;
+    }
+
+    .product-image {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 25px;
+      }
+      
+      .benefits {
+        flex-direction: column;
+      }
+      
+      .benefit {
+        margin-bottom: 10px;
+      }
+      
+      .language-switcher {
+        position: relative;
+        top: 0;
+        right: 0;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+    }
+
+    /* RTL styles for Arabic */
+    body.rtl {
+      direction: rtl;
+      text-align: right;
+      font-family: 'Cairo', sans-serif;
+    }
+
+    body.rtl .language-switcher {
+      right: auto;
+      left: 20px;
+    }
+
+    body.rtl .new-badge {
+      margin-left: 0;
+      margin-right: 10px;
     }
   </style>
 </head>
-<body>
+<body class="ltr">
+  <div class="language-switcher">
+    <button class="lang-btn active" id="englishBtn">English</button>
+    <button class="lang-btn" id="arabicBtn">العربية</button>
+  </div>
 
   <div class="container">
-    <h1>Select Your Country</h1>
+    <div class="logo" data-en="NatureVibe" data-ar="NatureVibe">NatureVibe</div>
+    <div class="tagline" data-en="Natural drinks to boost energy, immunity and vitality" data-ar="مشروبات طبيعية لتعزيز الطاقة والمناعة والحوية">Natural drinks to boost energy, immunity and vitality</div>
+    
+    <div class="product-image">🥤</div>
+    
+    <div class="stats">
+      <div class="stat-item">
+        <span class="stat-number">8</span>
+        <span data-en="Products" data-ar="منتجات">Products</span>
+      </div>
+    </div>
+
+    <h1>
+      <span data-en="Select Your Country" data-ar="اختر بلدك">Select Your Country</span>
+      <span class="new-badge" data-en="New" data-ar="جديد">New</span>
+    </h1>
+    <p class="description" data-en="Choose your location to get NatureVibe natural drinks suitable for your region" data-ar="اختر موقعك للحصول على مشروبات NatureVibe الطبيعية المناسبة لمنطقتك">Choose your location to get NatureVibe natural drinks suitable for your region</p>
+    
     <select id="countrySelector">
-      <option value="">-- Choose Country --</option>
-      <option value="https://example.com/usa">USA</option>
-      <option value="https://example.com/canada">Canada</option>
-      <option value="https://example.com/uk">UK</option>
-      <option value="https://example.com/germany">Germany</option>
-      <option value="https://example.com/france">France</option>
+      <option value="">-- <span data-en="Choose Country" data-ar="اختر البلد">Choose Country</span> --</option>
+      <option value="https://naturevibe.com/saudi" data-en="Saudi Arabia" data-ar="المملكة العربية السعودية">Saudi Arabia</option>
+      <option value="https://naturevibe.com/uae" data-en="United Arab Emirates" data-ar="الإمارات العربية المتحدة">United Arab Emirates</option>
+      <option value="https://naturevibe.com/kuwait" data-en="Kuwait" data-ar="الكويت">Kuwait</option>
+      <option value="https://naturevibe.com/qatar" data-en="Qatar" data-ar="قطر">Qatar</option>
+      <option value="https://naturevibe.com/bahrain" data-en="Bahrain" data-ar="البحرين">Bahrain</option>
+      <option value="https://naturevibe.com/oman" data-en="Oman" data-ar="عُمان">Oman</option>
     </select>
 
+    <div class="benefits">
+      <div class="benefit">
+        <div class="benefit-icon">⚡</div>
+        <div data-en="Energy Boost" data-ar="تعزيز الطاقة">Energy Boost</div>
+      </div>
+      <div class="benefit">
+        <div class="benefit-icon">🛡️</div>
+        <div data-en="Immunity Support" data-ar="تقوية المناعة">Immunity Support</div>
+      </div>
+      <div class="benefit">
+        <div class="benefit-icon">💚</div>
+        <div data-en="Vitality" data-ar="زيادة النشاط">Vitality</div>
+      </div>
+    </div>
+
     <div class="link-container" id="linkContainer">
-      <p>Your special URL:</p>
-      <a id="forwardButton" href="#" target="_blank">Go to Link</a>
+      <p data-en="Your special URL:" data-ar="الرابط الخاص بك:">Your special URL:</p>
+      <a id="forwardButton" href="#" target="_blank" data-en="Visit Your Country Page" data-ar="زر صفحة بلدك">Visit Your Country Page</a>
     </div>
   </div>
+
+  <div class="footer" data-en="NatureVibe - Natural Solutions for Low Energy" data-ar="NatureVibe - حلول طبيعية للطاقة المنخفضة">NatureVibe - Natural Solutions for Low Energy</div>
 
   <script>
     const selector = document.getElementById('countrySelector');
     const linkContainer = document.getElementById('linkContainer');
     const forwardButton = document.getElementById('forwardButton');
+    const englishBtn = document.getElementById('englishBtn');
+    const arabicBtn = document.getElementById('arabicBtn');
+    const body = document.body;
 
+    // Country selector functionality
     selector.addEventListener('change', () => {
       const selectedURL = selector.value;
       if(selectedURL){
@@ -90,7 +351,44 @@
         linkContainer.style.display = 'none';
       }
     });
-  </script>
 
+    // Language switching functionality
+    function switchLanguage(lang) {
+      if (lang === 'ar') {
+        body.classList.remove('ltr');
+        body.classList.add('rtl');
+        englishBtn.classList.remove('active');
+        arabicBtn.classList.add('active');
+      } else {
+        body.classList.remove('rtl');
+        body.classList.add('ltr');
+        arabicBtn.classList.remove('active');
+        englishBtn.classList.add('active');
+      }
+      
+      // Update all text elements
+      document.querySelectorAll('[data-en], [data-ar]').forEach(element => {
+        if (lang === 'ar' && element.hasAttribute('data-ar')) {
+          element.textContent = element.getAttribute('data-ar');
+        } else if (lang === 'en' && element.hasAttribute('data-en')) {
+          element.textContent = element.getAttribute('data-en');
+        }
+      });
+      
+      // Update select options
+      const options = selector.querySelectorAll('option');
+      options.forEach(option => {
+        if (option.value && lang === 'ar' && option.hasAttribute('data-ar')) {
+          option.textContent = option.getAttribute('data-ar');
+        } else if (option.value && lang === 'en' && option.hasAttribute('data-en')) {
+          option.textContent = option.getAttribute('data-en');
+        }
+      });
+    }
+
+    // Event listeners for language buttons
+    englishBtn.addEventListener('click', () => switchLanguage('en'));
+    arabicBtn.addEventListener('click', () => switchLanguage('ar'));
+  </script>
 </body>
 </html>
